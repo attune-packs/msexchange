@@ -1,0 +1,12 @@
+ref: msexchange.item_sensor
+label: "Exchange Unread Item Sensor"
+description: "Polls Exchange per active rule for unread folder items"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: item_sensor.py
+trigger_types: [msexchange.exchange_new_item]
+poll_interval: 5
+log_retention_policy: versions
+log_retention_limit: 4
+tags: [exchange, email, polling]

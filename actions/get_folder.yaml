@@ -1,0 +1,19 @@
+ref: msexchange.get_folder
+label: "Get Exchange Folder"
+description: "Get details for an Exchange folder"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: exchange_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  operation: {type: string, const: get_folder, default: get_folder}
+  credential_key: {type: string, default: "msexchange.credentials"}
+  folder_name: {type: string, required: true}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [exchange, folder]

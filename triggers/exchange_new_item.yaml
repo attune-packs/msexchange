@@ -1,0 +1,18 @@
+ref: msexchange.exchange_new_item
+label: "New Unread Exchange Item"
+description: "Emitted for each unread item found in a configured Exchange folder"
+enabled: true
+parameters:
+  credential_file: {type: string, required: true, pattern: "^/run/secrets/.+", description: "JSON Exchange credential file mounted below /run/secrets"}
+  folder: {type: string, default: Inbox}
+  poll_interval_seconds: {type: integer, default: 60, minimum: 5, maximum: 3600}
+  page_size: {type: integer, default: 50, minimum: 1, maximum: 500}
+  mark_read: {type: boolean, default: true, description: "Mark each item read only after successful event emission"}
+output:
+  item_id: {type: string, required: true}
+  change_key: {type: string, required: true}
+  subject: {type: string, required: true}
+  body: {type: string, required: true}
+  datetime_received: {type: string, required: true}
+  folder: {type: string, required: true}
+tags: [exchange, email, polling]

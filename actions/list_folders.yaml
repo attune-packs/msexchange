@@ -1,0 +1,19 @@
+ref: msexchange.list_folders
+label: "List Exchange Folders"
+description: "List top-level folders or children of a named folder"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: exchange_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  operation: {type: string, const: list_folders, default: list_folders}
+  credential_key: {type: string, default: "msexchange.credentials"}
+  root: {type: string}
+output:
+  operation: {type: string, required: true}
+  result: {type: array, required: true, items: {type: object}}
+tags: [exchange, folder]

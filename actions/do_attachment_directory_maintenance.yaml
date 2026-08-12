@@ -1,0 +1,19 @@
+ref: msexchange.do_attachment_directory_maintenance
+label: "Maintain Attachment Directory"
+description: "Delete old files and reduce an attachment directory below a size threshold"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: attachment_maintenance.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+parameters:
+  attachment_directory: {type: string, required: true, description: "Absolute mutable directory outside the pack"}
+  attachment_directory_maximum_size: {type: integer, default: 50, minimum: 0}
+  attachment_days_to_keep: {type: integer, default: 7, minimum: 0}
+output:
+  deleted_files: {type: integer, required: true}
+  deleted_bytes: {type: integer, required: true}
+  remaining_bytes: {type: integer, required: true}
+tags: [exchange, attachment, maintenance]

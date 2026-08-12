@@ -1,0 +1,15 @@
+ref: msexchange.attachment_directory_maintenance
+pack_ref: msexchange
+label: "Maintain Exchange Attachment Directory"
+description: "Daily maintenance equivalent to the source maintenance poller and disabled rule"
+trigger_ref: core.crontimer
+action_ref: msexchange.do_attachment_directory_maintenance
+trigger_params:
+  expression: "0 0 0 * * *"
+  timezone: UTC
+action_params:
+  attachment_directory: "/var/lib/attune/msexchange-attachments"
+  attachment_directory_maximum_size: 50
+  attachment_days_to_keep: 7
+conditions: {}
+enabled: false

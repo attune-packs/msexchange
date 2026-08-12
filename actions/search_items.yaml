@@ -1,0 +1,22 @@
+ref: msexchange.search_items
+label: "Search Exchange Items"
+description: "Search Exchange folder items by subject and optional ISO 8601 start date"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: exchange_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  operation: {type: string, const: search_items, default: search_items}
+  credential_key: {type: string, default: "msexchange.credentials"}
+  folder: {type: string, default: Inbox}
+  subject: {type: string}
+  include_body: {type: boolean, default: true}
+  search_start_date: {type: string, format: date-time}
+output:
+  operation: {type: string, required: true}
+  result: {type: array, required: true, items: {type: object}}
+tags: [exchange, email, search]

@@ -1,0 +1,25 @@
+ref: msexchange.save_attachments
+label: "Save Exchange Attachments"
+description: "Save email file attachments into the execution artifact directory"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: exchange_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  operation: {type: string, const: save_attachments, default: save_attachments}
+  credential_key: {type: string, default: "msexchange.credentials"}
+  folder: {type: string, default: Inbox}
+  subject: {type: string}
+  search_start_date: {type: string, format: date-time}
+  message_id: {type: string}
+  change_key: {type: string}
+  attachment_format: {type: string, default: BINARY, enum: [BINARY, TEXT]}
+  replace_spaces_in_filename: {type: string, default: NONE, enum: [NONE, UNDERSCORE, "OCTOTHORPE/HASH", PIPE]}
+output:
+  operation: {type: string, required: true}
+  result: {type: array, required: true, items: {type: object}}
+tags: [exchange, email, attachment, artifact]
