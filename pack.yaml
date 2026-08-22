@@ -1,7 +1,7 @@
 ref: msexchange
 label: "Microsoft Exchange"
 description: "Actions and polling events for Microsoft Exchange Server and Exchange Online through EWS"
-version: "0.1.0"
+version: "0.1.1"
 author: "Attune"
 email: "support@attune.systems"
 system: false
@@ -26,6 +26,7 @@ meta:
     - "attune-sdk[sensor]>=0.1.0"
     - "exchangelib>=5.4,<6"
     - "python-dateutil>=2.8"
+    - "PyYAML>=6.0,<7"
 
 tags: [exchange, ews, email, calendar, office365]
 runtime_deps: [python]
