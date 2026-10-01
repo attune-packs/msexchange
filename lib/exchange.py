@@ -26,7 +26,7 @@ def fetch_key(ref: str) -> dict[str, Any]:
     except ImportError as exc:
         raise ExchangePackError("attune-sdk is required to resolve credential_key") from exc
     try:
-        response = get_key.sync_detailed(ref, client=attune.context.client, decrypt=True)
+        response = get_key.sync_detailed(ref, client=attune.context.client)
     except Exception as exc:
         raise ExchangePackError(f"unable to read credential Key {ref!r}") from exc
     if int(response.status_code) >= 400 or not response.parsed:

@@ -11,7 +11,7 @@ output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
   operation: {type: string, const: save_attachments, default: save_attachments}
-  credential_key: {type: string, default: "msexchange.credentials"}
+  credential_key: {type: string, default: "pack.msexchange.credentials"}
   folder: {type: string, default: Inbox}
   subject: {type: string}
   search_start_date: {type: string, format: date-time}

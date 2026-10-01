@@ -11,10 +11,10 @@ conf_schema:
   default_credential_key:
     type: string
     description: "Pack-owned Key containing Exchange credentials"
-    default: "msexchange.credentials"
+    default: "pack.msexchange.credentials"
 
 config:
-  default_credential_key: "msexchange.credentials"
+  default_credential_key: "pack.msexchange.credentials"
 
 meta:
   category: integration

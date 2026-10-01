@@ -11,7 +11,7 @@ output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
   operation: {type: string, const: search_items, default: search_items}
-  credential_key: {type: string, default: "msexchange.credentials"}
+  credential_key: {type: string, default: "pack.msexchange.credentials"}
   folder: {type: string, default: Inbox}
   subject: {type: string}
   include_body: {type: boolean, default: true}

@@ -11,7 +11,7 @@ output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
   operation: {type: string, const: get_calendar_items, default: get_calendar_items}
-  credential_key: {type: string, default: "msexchange.credentials"}
+  credential_key: {type: string, default: "pack.msexchange.credentials"}
   start_year: {type: integer, required: true}
   start_month: {type: integer, required: true, minimum: 1, maximum: 12}
   start_day: {type: integer, required: true, minimum: 1, maximum: 31}

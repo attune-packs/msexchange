@@ -11,7 +11,7 @@ available, and create the action credential as a pack-owned encrypted Key:
 
 ```bash
 attune key create -e --owner-type pack --owner-pack-ref msexchange \
-  --ref msexchange.credentials \
+  --local-ref credentials --name "Microsoft Exchange credentials" \
   --value '{"primary_smtp_address":"automation@example.invalid","username":"REDACTED","password":"REDACTED","timezone":"UTC","verify_ssl":true}'
 ```
 
@@ -36,7 +36,7 @@ its event, preserving the source pack's destructive unread-item semantics.
 - `msexchange.do_attachment_directory_maintenance`
 
 Action parameters are one flat stdin JSON document. Exchange actions accept a
-`credential_key`, defaulting to `msexchange.credentials`. Saved attachments go
+`credential_key`, defaulting to `pack.msexchange.credentials`. Saved attachments go
 to `ATTUNE_ARTIFACTS_DIR`; filenames are basename-normalized and made unique.
 The source wrote into its pack directory, which is incompatible with Attune's
 read-only pack assumption.

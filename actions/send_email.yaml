@@ -11,7 +11,7 @@ output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
   operation: {type: string, const: send_email, default: send_email}
-  credential_key: {type: string, default: "msexchange.credentials"}
+  credential_key: {type: string, default: "pack.msexchange.credentials"}
   subject: {type: string, required: true}
   body: {type: string, required: true}
   to_recipients: {type: array, required: true, min_items: 1, items: {type: string}}

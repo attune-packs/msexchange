@@ -8,7 +8,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 from unittest.mock import patch
 
 import yaml
@@ -35,6 +35,31 @@ class FakeQuery(list):
 
 
 class PackTests(unittest.TestCase):
+    def test_key_lookup_uses_current_sdk_signature(self):
+        calls = {}
+        get_key = ModuleType("attune.api_client.api.secrets.get_key")
+
+        def sync_detailed(ref, *, client):
+            calls.update(ref=ref, client=client)
+            data = SimpleNamespace(value={"username": "user@example.invalid"})
+            return SimpleNamespace(status_code=200, parsed=SimpleNamespace(data=data))
+
+        get_key.sync_detailed = sync_detailed
+        secrets = ModuleType("attune.api_client.api.secrets")
+        secrets.get_key = get_key
+        attune = ModuleType("attune")
+        attune.context = SimpleNamespace(client="execution-client")
+        modules = {
+            "attune": attune,
+            "attune.api_client": ModuleType("attune.api_client"),
+            "attune.api_client.api": ModuleType("attune.api_client.api"),
+            "attune.api_client.api.secrets": secrets,
+        }
+        with patch.dict(sys.modules, modules):
+            value = exchange.fetch_key("pack.msexchange.credentials")
+        self.assertEqual(value["username"], "user@example.invalid")
+        self.assertEqual(calls, {"ref": "pack.msexchange.credentials", "client": "execution-client"})
+
     def test_action_metadata_covers_source_inventory(self):
         expected = {
             "do_attachment_directory_maintenance", "get_calendar_items", "get_folder",
@@ -59,6 +84,16 @@ class PackTests(unittest.TestCase):
             set(trigger["output"]),
             {"item_id", "change_key", "subject", "body", "datetime_received", "folder"},
         )
+
+    def test_key_creation_example_uses_local_ref_and_canonical_reads(self):
+        readme = (PACK_ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn('--local-ref credentials --name "Microsoft Exchange credentials"', readme)
+        self.assertNotIn("--ref msexchange.credentials", readme)
+        for path in (PACK_ROOT / "actions").glob("*.yaml"):
+            document = yaml.safe_load(path.read_text(encoding="utf-8"))
+            credential = document.get("parameters", {}).get("credential_key")
+            if credential is not None:
+                self.assertEqual(credential["default"], "pack.msexchange.credentials")
 
     def test_credentials_validation_rejects_invalid_input(self):
         with self.assertRaises(exchange.ExchangePackError):

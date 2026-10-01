@@ -12,7 +12,7 @@ from lib.exchange import create_account, execute, fetch_key  # noqa: E402
 
 def main(**params):
     operation = params.pop("operation")
-    credentials = fetch_key(params.pop("credential_key", "msexchange.credentials"))
+    credentials = fetch_key(params.pop("credential_key", "pack.msexchange.credentials"))
     account, timezone = create_account(credentials)
     return {"operation": operation, "result": execute(operation, params, account, timezone)}
 
